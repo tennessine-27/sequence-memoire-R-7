@@ -35,7 +35,7 @@ const App: React.FC = () => {
 
   // Refs for Canvas
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const requestRef = useRef<number>();
+  const requestRef = useRef<number | null>(null);
   
   // Computed
   const currentLevelConfig = LEVELS.find(l => l.id === currentLevelId) || LEVELS[0];
