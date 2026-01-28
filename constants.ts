@@ -22,7 +22,7 @@ export const LEVELS: LevelConfig[] = [
     name: "PARE-FEU PRIMAIRE",
     difficulty: "EASY",
     lives: 2,
-    timeLimit: 30,
+    timeLimit: 45,
     clue: "PROTOCOLE NEXUS",
     pairs: [
       { left: "Cyborg", leftIcon: "fa-user-gear", right: "Transhumanisme", rightIcon: "fa-infinity" },

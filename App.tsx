@@ -364,11 +364,13 @@ const App: React.FC = () => {
   if (gameState === GameState.MENU) {
     return (
       <div className={`w-full h-screen bg-black flex flex-col items-center justify-center relative overflow-hidden text-center p-4 ${theme.scrollbar}`}>
-        <div className="bg-grid"></div>
-        <MatrixRain color="#22d3ee" />
-        <div className="scanlines"></div>
+        <div className="bg-grid" aria-hidden="true"></div>
+        <div aria-hidden="true">
+          <MatrixRain color="#22d3ee" />
+        </div>
+        <div className="scanlines" aria-hidden="true"></div>
         
-        <div className={`relative z-10 p-8 md:p-10 border border-white/10 bg-black/50 backdrop-blur-sm rounded-lg shadow-2xl animate-fade-in w-full max-w-3xl`}>
+        <div className={`relative z-10 p-6 md:p-10 border border-white/10 bg-black/50 backdrop-blur-sm rounded-lg shadow-2xl animate-fade-in w-full max-w-3xl`}>
           <h1 className={`text-4xl md:text-7xl font-bold mb-2 tracking-widest uppercase ${theme.primary} drop-shadow-[0_0_10px_rgba(34,211,238,0.5)]`}>
             Séquence mémoire R-7
           </h1>
@@ -385,21 +387,21 @@ const App: React.FC = () => {
              
              <div className="space-y-6">
                <div className="flex items-start">
-                  <span className="text-cyan-500 min-w-[30px] font-bold mt-1">01</span>
+                  <span className="text-cyan-500 min-w-[30px] font-bold mt-1" aria-hidden="true">01</span>
                   <span className="text-slate-300">
                      <div className="text-white font-bold tracking-wider mb-1">ACTION :</div>
                      <div className="lowercase">cliquez sur un élément à gauche, puis sur son association logique à droite pour les relier.</div>
                   </span>
                </div>
                <div className="flex items-start">
-                  <span className="text-cyan-500 min-w-[30px] font-bold mt-1">02</span>
+                  <span className="text-cyan-500 min-w-[30px] font-bold mt-1" aria-hidden="true">02</span>
                   <span className="text-slate-300">
                      <div className="text-white font-bold tracking-wider mb-1">TEMPS :</div>
-                     <div className="lowercase">vous n'avez que <span className="text-cyan-400 font-bold">30 secondes</span> par niveau.</div>
+                    <div className="lowercase"> <span className="text-cyan-400 font-bold">Limité</span> par niveau (sauf <span className="text-cyan-400 font-bold">Niveau 00 - Tutoriel</span>)</div>
                   </span>
                </div>
                <div className="flex items-start">
-                  <span className="text-rose-500 min-w-[30px] font-bold mt-1">03</span>
+                  <span className="text-rose-500 min-w-[30px] font-bold mt-1" aria-hidden="true">03</span>
                   <span className="text-slate-300">
                      <div className="text-white font-bold tracking-wider mb-1">SÉCURITÉ :</div>
                      <div className="lowercase">droit à l'erreur limité. à la <span className="text-rose-400 font-bold">2ème erreur</span> par niveau, le système se verrouille définitivement.</div>
@@ -411,17 +413,18 @@ const App: React.FC = () => {
           <button 
             onClick={() => startLevel(currentLevelId)}
             className={`
-              relative px-12 py-5 text-2xl font-bold uppercase tracking-widest transition-all duration-300
+              relative px-12 py-5 text-xl md:text-2xl font-bold uppercase tracking-widest transition-all duration-300
               border-2 ${theme.border} ${theme.primary}
               hover:bg-cyan-500/10 hover:shadow-[0_0_20px_rgba(34,211,238,0.4)] hover:scale-105
-              focus:outline-none focus:ring-2 ${theme.ring}
+              focus:outline-none focus:ring-4 focus:ring-offset-2 focus:ring-cyan-500
             `}
+            aria-label={currentLevelId > 0 ? 'Reprendre la session' : 'Initialiser le noyau'}
           >
             {currentLevelId > 0 ? 'REPRENDRE LA SESSION' : 'INITIALISER LE NOYAU'}
-            <div className="absolute top-0 left-0 w-2 h-2 border-t-2 border-l-2 border-current"></div>
-            <div className="absolute top-0 right-0 w-2 h-2 border-t-2 border-r-2 border-current"></div>
-            <div className="absolute bottom-0 left-0 w-2 h-2 border-b-2 border-l-2 border-current"></div>
-            <div className="absolute bottom-0 right-0 w-2 h-2 border-b-2 border-r-2 border-current"></div>
+            <div className="absolute top-0 left-0 w-2 h-2 border-t-2 border-l-2 border-current" aria-hidden="true"></div>
+            <div className="absolute top-0 right-0 w-2 h-2 border-t-2 border-r-2 border-current" aria-hidden="true"></div>
+            <div className="absolute bottom-0 left-0 w-2 h-2 border-b-2 border-l-2 border-current" aria-hidden="true"></div>
+            <div className="absolute bottom-0 right-0 w-2 h-2 border-b-2 border-r-2 border-current" aria-hidden="true"></div>
           </button>
         </div>
       </div>
@@ -431,9 +434,11 @@ const App: React.FC = () => {
   if (gameState === GameState.TRANSITION) {
     return (
       <div className={`w-full h-screen bg-black flex flex-col items-center justify-center p-4 relative ${theme.scrollbar}`}>
-        <div className="bg-grid"></div>
-        <MatrixRain color={isLevel3 ? "#f43f5e" : "#22d3ee"} />
-        <div className="scanlines"></div>
+        <div className="bg-grid" aria-hidden="true"></div>
+        <div aria-hidden="true">
+            <MatrixRain color={isLevel3 ? "#f43f5e" : "#22d3ee"} />
+        </div>
+        <div className="scanlines" aria-hidden="true"></div>
         <h2 className={`text-4xl md:text-6xl mb-8 font-bold animate-pulse ${theme.primary}`} role="status">CONNEXION ÉTABLIE</h2>
         
         <div className={`border ${theme.border} bg-black/60 backdrop-blur-md p-10 max-w-2xl rounded-sm shadow-[0_0_30px_rgba(0,0,0,0.5)] z-10 text-center relative overflow-hidden`}>
@@ -446,7 +451,7 @@ const App: React.FC = () => {
 
         <div className="mt-12 text-center">
             <p className="text-xl mb-2 text-slate-400">TÉLÉCHARGEMENT VERS LE NOEUD SUIVANT...</p>
-            <div className={`text-8xl font-bold ${theme.primary}`} aria-label="Compte à rebours">{transitionCount}</div>
+            <div className={`text-8xl font-bold ${theme.primary}`} aria-label={`Démarrage dans ${transitionCount} secondes`}>{transitionCount}</div>
         </div>
       </div>
     );
@@ -455,9 +460,11 @@ const App: React.FC = () => {
   if (gameState === GameState.GAME_OVER) {
     return (
       <div className="w-full h-screen bg-black flex flex-col items-center justify-center p-4 relative text-rose-500 theme-red overflow-y-auto">
-        <div className="bg-grid"></div>
-        <MatrixRain color="#f43f5e" />
-        <div className="scanlines"></div>
+        <div className="bg-grid" aria-hidden="true"></div>
+        <div aria-hidden="true">
+            <MatrixRain color="#f43f5e" />
+        </div>
+        <div className="scanlines" aria-hidden="true"></div>
         
         <div className="z-10 flex flex-col items-center max-w-4xl w-full my-auto">
             <h1 className="text-6xl md:text-7xl font-bold mb-4 tracking-tighter drop-shadow-[0_0_15px_rgba(244,63,94,0.6)] text-center" role="alert">ÉCHEC SYSTÈME</h1>
@@ -465,7 +472,7 @@ const App: React.FC = () => {
             
             {/* Lockout Message */}
             <div className="border border-rose-500/30 bg-rose-950/20 p-8 text-center max-w-md backdrop-blur-sm animate-pulse rounded mb-8">
-                <div className="text-4xl mb-4"><i className="fa-solid fa-lock"></i></div>
+                <div className="text-4xl mb-4" aria-hidden="true"><i className="fa-solid fa-lock"></i></div>
                 <h3 className="text-xl font-bold tracking-widest mb-2">TERMINAL VERROUILLÉ</h3>
                 <p className="text-sm text-rose-400/70 uppercase">
                     Protocole de sécurité activé. <br/>
@@ -482,7 +489,7 @@ const App: React.FC = () => {
                     <ul className="space-y-4">
                         {unlockedClues.map((clue, i) => (
                             <li key={i} className="text-rose-200 font-mono text-lg flex flex-col sm:flex-row sm:items-center">
-                                <span className="opacity-50 mr-4 font-bold text-rose-600 shrink-0">0{i} //</span> 
+                                <span className="opacity-50 mr-4 font-bold text-rose-600 shrink-0" aria-hidden="true">0{i} //</span> 
                                 <span className="break-all">{renderClueContent(clue, true)}</span>
                             </li>
                         ))}
@@ -497,19 +504,21 @@ const App: React.FC = () => {
   if (gameState === GameState.VICTORY) {
     return (
       <div className="w-full h-screen bg-black flex flex-col items-center justify-center p-4 relative">
-        <div className="bg-grid"></div>
-        <div className="scanlines"></div>
-        <MatrixRain color="#22d3ee" />
+        <div className="bg-grid" aria-hidden="true"></div>
+        <div className="scanlines" aria-hidden="true"></div>
+        <div aria-hidden="true">
+            <MatrixRain color="#22d3ee" />
+        </div>
         <div className="z-10 bg-black/80 backdrop-blur-lg p-12 border border-cyan-500/50 rounded-xl shadow-[0_0_50px_rgba(34,211,238,0.2)] max-w-4xl w-full text-center">
           <h1 className="text-6xl md:text-8xl font-bold mb-6 text-cyan-400 tracking-tighter">PIRATAGE COMPLET</h1>
           <p className="text-2xl mb-10 text-slate-200">ACCÈS AUTORISÉ</p>
           
-          <div className="text-left mb-8 border border-cyan-900/50 p-6 bg-black/50 rounded max-h-[50vh] overflow-y-auto">
+          <div className="text-left mb-8 border border-cyan-900/50 p-6 bg-black/50 rounded max-h-[50vh] overflow-y-auto" tabIndex={0} aria-label="Journal des données décryptées">
             <h3 className="text-cyan-400 border-b border-cyan-900/50 pb-2 mb-4 text-sm uppercase tracking-widest">JOURNAL DES DONNÉES :</h3>
             <ul className="space-y-4">
               {unlockedClues.map((clue, i) => (
                 <li key={i} className="text-cyan-200 font-mono text-lg flex flex-col sm:flex-row sm:items-center">
-                  <span className="opacity-50 mr-4 font-bold text-cyan-600 shrink-0">0{i} //</span> 
+                  <span className="opacity-50 mr-4 font-bold text-cyan-600 shrink-0" aria-hidden="true">0{i} //</span> 
                   <span className="break-all">{renderClueContent(clue, true)}</span>
                 </li>
               ))}
@@ -527,20 +536,21 @@ const App: React.FC = () => {
 
   return (
     <div className={`w-full h-screen bg-black flex flex-col overflow-hidden relative ${theme.scrollbar}`}>
-      <div className="bg-grid"></div>
-      <MatrixRain color={isLevel3 ? "#f43f5e" : "#22d3ee"} />
-      <div className="scanlines"></div>
+      <div className="bg-grid" aria-hidden="true"></div>
+      <div aria-hidden="true">
+        <MatrixRain color={isLevel3 ? "#f43f5e" : "#22d3ee"} />
+      </div>
+      <div className="scanlines" aria-hidden="true"></div>
       
       {/* Canvas Layer */}
-      <canvas ref={canvasRef} className="absolute top-0 left-0 pointer-events-none z-10" />
+      <canvas ref={canvasRef} className="absolute top-0 left-0 pointer-events-none z-10" aria-hidden="true" />
 
-      {/* Timer Overlay (Center of playable area) */}
+      {/* Timer Overlay (Background Art) */}
       {timeLeft !== null && (
         <div className="absolute top-24 left-0 right-0 md:right-72 bottom-0 flex items-center justify-center pointer-events-none z-0">
           <div 
             className={`text-[15rem] md:text-[25rem] font-bold ${isLevel3 ? 'text-rose-600' : 'text-slate-800'} opacity-10 animate-pulse select-none`}
-            role="timer"
-            aria-live="assertive"
+            aria-hidden="true"
           >
             {timeLeft}
           </div>
@@ -548,34 +558,45 @@ const App: React.FC = () => {
       )}
 
       {/* Header (Fixed) */}
-      <header className={`relative z-30 h-24 border-b ${theme.border} bg-black/80 backdrop-blur-md flex items-center justify-between px-6 lg:px-12 shadow-lg`}>
-        <div className="flex flex-col">
-          <h2 className={`text-3xl font-bold tracking-tighter ${theme.primary} drop-shadow-[0_0_5px_rgba(0,0,0,0.8)]`}>
+      <header className={`relative z-30 h-24 border-b ${theme.border} bg-black/80 backdrop-blur-md flex items-center justify-between px-4 sm:px-6 lg:px-12 shadow-lg`} role="banner">
+        <div className="flex flex-col min-w-[100px]">
+          <h2 className={`text-2xl md:text-3xl font-bold tracking-tighter ${theme.primary} drop-shadow-[0_0_5px_rgba(0,0,0,0.8)]`}>
             NIV 0{currentLevelId}
           </h2>
-          <div className="text-xs text-slate-400 tracking-[0.2em] uppercase">{currentLevelConfig.name}</div>
+          <div className="text-[10px] md:text-xs text-slate-400 tracking-[0.2em] uppercase">{currentLevelConfig.name}</div>
         </div>
         
-        <div className="flex flex-col items-center flex-1 mx-8 hidden md:flex">
+        <div className="flex flex-col items-center flex-1 mx-4 hidden md:flex">
             <div className={`
               w-full max-w-xl bg-black/40 border ${theme.border} rounded p-2 
               text-center text-xl font-mono tracking-widest break-all h-14 
               flex items-center justify-center overflow-hidden text-slate-200
               shadow-inner
-            `} aria-label="Texte crypté">
+            `} aria-label="Texte crypté" role="status">
               {scrambledClue}
             </div>
         </div>
 
-        <div className="text-right">
+        {/* Right side stats */}
+        <div className="text-right flex flex-col items-end gap-1">
+             {/* Visible Timer for RGAA/Clarity */}
+            {timeLeft !== null && (
+              <div className="flex items-center mb-1" role="timer" aria-label={`Temps restant : ${timeLeft} secondes`}>
+                  <i className="fa-regular fa-clock mr-2 text-slate-400 text-sm"></i>
+                  <span className={`text-2xl font-mono font-bold ${timeLeft <= 10 ? 'text-red-500 animate-pulse' : theme.primary}`}>
+                    {timeLeft}s
+                  </span>
+              </div>
+            )}
+
             <div className="flex flex-col items-end">
-              <span className="text-xs text-slate-500 uppercase tracking-widest mb-1">INTÉGRITÉ SYSTÈME</span>
+              <span className="text-[10px] text-slate-500 uppercase tracking-widest hidden sm:block">INTÉGRITÉ SYSTÈME</span>
               <div className={`flex text-lg ${theme.primary}`} aria-label={`${lives} vies restantes`}>
                 {currentLevelConfig.lives === -1 ? (
-                  <i className="fa-solid fa-infinity"></i>
+                  <i className="fa-solid fa-infinity" title="Vies illimitées"></i>
                 ) : (
                   Array.from({length: 2}).map((_, i) => (
-                    <i key={i} className={`fa-solid fa-heart ml-1 drop-shadow-md ${i < lives ? '' : 'opacity-20 text-slate-600'}`}></i>
+                    <i key={i} className={`fa-solid fa-heart ml-1 drop-shadow-md ${i < lives ? '' : 'opacity-20 text-slate-600'}`} aria-hidden="true"></i>
                   ))
                 )}
               </div>
@@ -587,11 +608,12 @@ const App: React.FC = () => {
       <div className="flex-1 flex overflow-hidden relative z-20">
         
         {/* Main Game Content (Scrollable) */}
-        <div className="flex-1 overflow-y-auto overflow-x-hidden relative scroll-smooth">
-          <main className="min-h-full flex items-start justify-between px-6 md:px-24 py-12 max-w-7xl mx-auto">
+        <div className="flex-1 overflow-y-auto overflow-x-hidden relative scroll-smooth" role="main">
+          {/* Reduced padding for mobile to fix responsiveness */}
+          <main className="min-h-full flex items-start justify-between px-2 sm:px-6 md:px-24 py-8 md:py-12 max-w-7xl mx-auto">
             
             {/* Left Column */}
-            <div className="flex flex-col space-y-6 w-1/3 md:w-1/4">
+            <div className="flex flex-col space-y-4 md:space-y-6 w-[45%] md:w-1/4">
               {leftNodes.map(node => {
                 const isSelected = selectedNode === node.id;
                 const isConnected = connections.find(c => c.from === node.id);
@@ -602,10 +624,12 @@ const App: React.FC = () => {
                     onClick={() => handleNodeClick(node.id)}
                     disabled={!!isConnected}
                     aria-label={`Sélectionner ${node.label}`}
+                    aria-pressed={isSelected}
                     className={`
-                      relative group flex items-center justify-between p-5 border
+                      relative group flex items-center justify-between p-3 md:p-5 border
                       transition-all duration-200 ease-out outline-none rounded-sm overflow-hidden
-                      backdrop-blur-sm
+                      backdrop-blur-sm w-full min-h-[3.5rem]
+                      focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-cyan-500
                       ${isConnected 
                         ? `${theme.border} bg-black/40 opacity-40 grayscale` 
                         : `border-slate-700 bg-black/60 hover:border-slate-500 hover:scale-[1.02] ${theme.hoverBg} cursor-pointer`
@@ -615,21 +639,30 @@ const App: React.FC = () => {
                     `}
                   >
                      {/* Tech corner accents */}
-                    <div className="absolute top-0 left-0 w-1 h-1 bg-current opacity-50"></div>
-                    <div className="absolute bottom-0 right-0 w-1 h-1 bg-current opacity-50"></div>
+                    <div className="absolute top-0 left-0 w-1 h-1 bg-current opacity-50" aria-hidden="true"></div>
+                    <div className="absolute bottom-0 right-0 w-1 h-1 bg-current opacity-50" aria-hidden="true"></div>
 
-                    <i className={`fa-solid ${node.icon} text-2xl w-8 text-center ${isSelected || isConnected ? theme.primary : 'text-slate-400 group-hover:text-slate-200'}`}></i>
-                    <span className={`hidden md:block font-medium uppercase tracking-wider ml-4 text-sm ${isSelected ? 'text-white' : 'text-slate-400 group-hover:text-white'}`}>{node.label}</span>
+                    <i className={`fa-solid ${node.icon} text-lg md:text-2xl w-6 md:w-8 text-center shrink-0 ${isSelected || isConnected ? theme.primary : 'text-slate-400 group-hover:text-slate-200'}`} aria-hidden="true"></i>
+                    
+                    {/* Responsive text handling: Allow wrap, adjust size */}
+                    <span className={`
+                        block font-medium uppercase tracking-wider ml-2 md:ml-4 
+                        text-xs sm:text-sm md:text-base whitespace-normal break-words text-left
+                        ${isSelected ? 'text-white' : 'text-slate-400 group-hover:text-white'}
+                    `}>
+                        {node.label}
+                    </span>
                     
                     {/* Connector Dot */}
                     <div 
                       id={`dot-${node.id}`}
                       className={`
-                        absolute -right-1.5 top-1/2 -translate-y-1/2 w-3 h-3 rounded-full 
+                        absolute -right-1.5 top-1/2 -translate-y-1/2 w-2 h-2 md:w-3 md:h-3 rounded-full 
                         border border-current bg-black z-20 transition-colors
                         ${isConnected ? theme.primary : 'border-slate-600 group-hover:border-white'}
                         ${isSelected ? `bg-current ${theme.glow}` : ''}
                       `}
+                      aria-hidden="true"
                     ></div>
                   </button>
                 );
@@ -637,7 +670,7 @@ const App: React.FC = () => {
             </div>
 
             {/* Right Column */}
-            <div className="flex flex-col space-y-6 w-1/3 md:w-1/4 text-right">
+            <div className="flex flex-col space-y-4 md:space-y-6 w-[45%] md:w-1/4 text-right">
               {rightNodes.map(node => {
                 const isSelected = selectedNode === node.id;
                 const isConnected = connections.find(c => c.to === node.id);
@@ -648,10 +681,12 @@ const App: React.FC = () => {
                     onClick={() => handleNodeClick(node.id)}
                     disabled={!!isConnected}
                     aria-label={`Connecter à ${node.label}`}
+                    aria-pressed={isSelected}
                     className={`
-                      relative group flex items-center justify-between flex-row-reverse p-5 border
+                      relative group flex items-center justify-between flex-row-reverse p-3 md:p-5 border
                       transition-all duration-200 ease-out outline-none rounded-sm overflow-hidden
-                      backdrop-blur-sm
+                      backdrop-blur-sm w-full min-h-[3.5rem]
+                      focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-cyan-500
                       ${isConnected 
                         ? `${theme.border} bg-black/40 opacity-40 grayscale` 
                         : `border-slate-700 bg-black/60 hover:border-slate-500 hover:scale-[1.02] ${theme.hoverBg} cursor-pointer`
@@ -661,21 +696,30 @@ const App: React.FC = () => {
                     `}
                   >
                      {/* Tech corner accents */}
-                     <div className="absolute top-0 right-0 w-1 h-1 bg-current opacity-50"></div>
-                     <div className="absolute bottom-0 left-0 w-1 h-1 bg-current opacity-50"></div>
+                     <div className="absolute top-0 right-0 w-1 h-1 bg-current opacity-50" aria-hidden="true"></div>
+                     <div className="absolute bottom-0 left-0 w-1 h-1 bg-current opacity-50" aria-hidden="true"></div>
 
-                    <i className={`fa-solid ${node.icon} text-2xl w-8 text-center ${isSelected || isConnected ? theme.primary : 'text-slate-400 group-hover:text-slate-200'}`}></i>
-                    <span className={`hidden md:block font-medium uppercase tracking-wider mr-4 text-sm ${isSelected ? 'text-white' : 'text-slate-400 group-hover:text-white'}`}>{node.label}</span>
+                    <i className={`fa-solid ${node.icon} text-lg md:text-2xl w-6 md:w-8 text-center shrink-0 ${isSelected || isConnected ? theme.primary : 'text-slate-400 group-hover:text-slate-200'}`} aria-hidden="true"></i>
+                    
+                    {/* Responsive text handling */}
+                    <span className={`
+                        block font-medium uppercase tracking-wider mr-2 md:mr-4 
+                        text-xs sm:text-sm md:text-base whitespace-normal break-words text-right
+                        ${isSelected ? 'text-white' : 'text-slate-400 group-hover:text-white'}
+                    `}>
+                        {node.label}
+                    </span>
                     
                     {/* Connector Dot */}
                     <div 
                       id={`dot-${node.id}`}
                       className={`
-                        absolute -left-1.5 top-1/2 -translate-y-1/2 w-3 h-3 rounded-full 
+                        absolute -left-1.5 top-1/2 -translate-y-1/2 w-2 h-2 md:w-3 md:h-3 rounded-full 
                         border border-current bg-black z-20 transition-colors
                         ${isConnected ? theme.primary : 'border-slate-600 group-hover:border-white'}
                         ${isSelected ? `bg-current ${theme.glow}` : ''}
                       `}
+                      aria-hidden="true"
                     ></div>
                   </button>
                 );
@@ -689,10 +733,10 @@ const App: React.FC = () => {
         <aside className={`
           absolute md:relative top-0 right-0 h-full w-72 bg-black/90 backdrop-blur-xl border-l ${theme.border} z-40 transform transition-transform duration-300
           ${isSidebarOpen ? 'translate-x-0' : 'translate-x-full md:translate-x-0'}
-        `}>
+        `} aria-label="Flux de données latéral">
           <div className="p-6 h-full overflow-y-auto">
               <h3 className={`text-lg font-bold border-b ${theme.border} pb-4 mb-6 tracking-widest ${theme.primary} flex items-center`}>
-                <i className="fa-solid fa-server mr-3"></i>
+                <i className="fa-solid fa-server mr-3" aria-hidden="true"></i>
                 FLUX DE DONNÉES
               </h3>
               <div className="space-y-3">
@@ -702,12 +746,12 @@ const App: React.FC = () => {
                   </div>
                 ) : (
                   unlockedClues.map((clue, idx) => (
-                    <div key={idx} className={`text-xs border ${theme.border} bg-white/5 p-3 rounded-sm relative overflow-hidden group hover:bg-white/10 transition-colors`}>
-                      <div className={`font-bold mb-1 opacity-50 font-mono ${theme.primary}`}>FRAGMENT_0{idx}</div>
+                    <div key={idx} className={`text-xs border ${theme.border} bg-white/5 p-3 rounded-sm relative overflow-hidden group hover:bg-white/10 transition-colors`} tabIndex={0} role="article" aria-label={`Fragment ${idx + 1} décrypté`}>
+                      <div className={`font-bold mb-1 opacity-50 font-mono ${theme.primary}`} aria-hidden="true">FRAGMENT_0{idx}</div>
                       <div className="text-slate-300 leading-relaxed">
                         {renderClueContent(clue, true)}
                       </div>
-                      <div className={`absolute top-0 right-0 p-1 opacity-20 group-hover:opacity-100 transition-opacity ${theme.primary}`}>
+                      <div className={`absolute top-0 right-0 p-1 opacity-20 group-hover:opacity-100 transition-opacity ${theme.primary}`} aria-hidden="true">
                         <i className="fa-solid fa-check"></i>
                       </div>
                     </div>
@@ -722,10 +766,11 @@ const App: React.FC = () => {
       {/* Sidebar Toggle (Mobile) */}
       <button 
         onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-        className={`absolute bottom-6 right-6 z-50 md:hidden p-4 rounded-full border ${theme.border} bg-black/80 ${theme.primary} shadow-lg backdrop-blur`}
-        aria-label="Afficher le flux de données"
+        className={`absolute bottom-6 right-6 z-50 md:hidden p-4 rounded-full border ${theme.border} bg-black/80 ${theme.primary} shadow-lg backdrop-blur focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500`}
+        aria-label={isSidebarOpen ? "Fermer le flux de données" : "Afficher le flux de données"}
+        aria-expanded={isSidebarOpen}
       >
-        <i className="fa-solid fa-database"></i>
+        <i className={`fa-solid ${isSidebarOpen ? 'fa-xmark' : 'fa-database'}`} aria-hidden="true"></i>
       </button>
 
     </div>
